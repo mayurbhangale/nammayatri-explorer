@@ -10,7 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@main
         with:
           persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of personal token
           fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
@@ -28,7 +28,7 @@ jobs:
           git commit -m "Update the db" -a
     
       - name: Push changes
-        uses: ad-m/github-push-action@master
+        uses: ad-m/github-push-action@main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
