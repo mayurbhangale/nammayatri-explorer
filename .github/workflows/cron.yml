@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  schedule:
+    - cron: "55 17 * * *"
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+        with:
+          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of personal token
+          fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
+
+      - name: Run a multi-line script
+        run: |
+          pip3 install -r requirements.txt
+          python3 app.py
+          
+      - name: Commit files
+        run: |
+          git config --local user.email "namma-yatri[bot]@users.noreply.github.com"
+          git config --local user.name "namma-yatri[bot]"
+          git add *.db
+          git commit -m "Update the db" -a
+    
+      - name: Push changes
+        uses: ad-m/github-push-action@main
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
