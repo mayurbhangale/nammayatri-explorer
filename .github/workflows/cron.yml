@@ -1,4 +1,4 @@
-name: CI
+name: Crawl and update data
 
 on:
   schedule:
@@ -28,7 +28,7 @@ jobs:
           git commit -m "Update the db" -a
     
       - name: Push changes
-        uses: ad-m/github-push-action@main
+        uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
